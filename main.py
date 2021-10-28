@@ -60,6 +60,7 @@ else:
     print('please select either "SO2" or "NO2"')
 # imgCol = imgCol.filterDate(args.s, args.e)
 
+print('Fetching data')
 dates = pd.date_range(args.s, args.e, freq = 'D')
 
 # download the images
@@ -103,7 +104,8 @@ for file in files:
     fig.set_size_inches(int(args.w) / 72, int(args.h) / 72)
     plt.tight_layout()
     # fig.set_size_inches(5, 4)
-    plt.savefig(os.path.join(args.o, file[:-4] + '.png'), dpi = 72)
+    plt.savefig(os.path.join(args.o, file[:-4] + '_' + args.p + '.png'), dpi = 72)
+    plt.close()
 
 # combine PNG together into GIF
 print('Creating the gif')
@@ -116,7 +118,7 @@ for file in files:
     image = Image.open(os.path.join(args.o, file))
     img.append(image)
 
-img[0].save(os.path.join(args.o, args.s + '_' + args.e + '.gif'), 
+img[0].save(os.path.join(args.o, args.s + '_' + args.e + '_' + args.p + '.gif'), 
             save_all = True, append_images = img[1:], duration = 200)
 
 print('Finished!')
